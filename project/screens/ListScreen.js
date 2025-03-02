@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, FlatList } from "react-native";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Button } from "react-native-web";
 
 const locations = [
   { id: 1, name: "Oulu", description: "Cold but nice", rating: 1 },
@@ -16,21 +17,29 @@ const Item = ({ name, description, rating }) => (
   </View>
 );
 
-const ListScreen = () => {
+const ListScreen = ({ navigation }) => {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        <FlatList
-          data={locations}
-          renderItem={({ item }) => (
-            <Item
-              name={item.name}
-              description={item.description}
-              rating={item.rating}
-            />
-          )}
-          keyExtractor={(item) => item.id}
-        />
+        <View>
+          <FlatList
+            data={locations}
+            renderItem={({ item }) => (
+              <Item
+                name={item.name}
+                description={item.description}
+                rating={item.rating}
+              />
+            )}
+            keyExtractor={(item) => item.id}
+            contentContainerStyle={{ flexGrow: 0 }}
+          />
+          <Button
+            title="Add Location"
+            onPress={() => navigation.navigate("Add location")}
+            contentContainerStyle={{ marginTop: 10 }}
+          />
+        </View>
       </SafeAreaView>
     </SafeAreaProvider>
   );
@@ -50,6 +59,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: "bold",
+    color: "violet",
   },
 });
 

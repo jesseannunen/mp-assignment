@@ -2,18 +2,27 @@ import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ListScreen from "./screens/ListScreen";
 import AddScreen from "./screens/AddScreen";
+import "@expo/metro-runtime";
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="List" component={ListScreen} />
-        <Stack.Screen name="Add" component={AddScreen} />
+      <Stack.Navigator initialRouteName="Locations">
+        <Stack.Screen
+          name="Locations"
+          component={ListScreen}
+          options={{ path: "locations" }}
+        />
+        <Stack.Screen
+          name="Add location"
+          component={AddScreen}
+          options={{ path: "add-location" }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

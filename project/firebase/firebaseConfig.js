@@ -9,7 +9,9 @@ const firebaseConfig = {
   messagingSenderId: process.env.EXPO_PUBLIC_MSG_SENDER_ID,
   appId: process.env.EXPO_PUBLIC_APP_ID,
 };
-
+console.log("Firebase Project ID:", process.env.EXPO_PUBLIC_PROJECT_ID);
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const PROJECT_REF = "project";
+
+export default firebaseConfig;

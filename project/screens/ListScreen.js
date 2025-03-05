@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, FlatList } from "react-native";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { Button } from "react-native-web";
+import { Button } from "react-native";
 
 const locations = [
   { id: 1, name: "Oulu", description: "Cold but nice", rating: 1 },
@@ -31,7 +31,7 @@ const ListScreen = ({ navigation }) => {
                 rating={item.rating}
               />
             )}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.id.toString()}
             contentContainerStyle={{ flexGrow: 0 }}
           />
           <Button

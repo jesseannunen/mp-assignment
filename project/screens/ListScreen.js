@@ -1,29 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, FlatList } from "react-native";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Button } from "react-native";
+import { getDocs, collection, onSnapshot } from "firebase/firestore";
+import { db, PROJECT_REF } from "../firebase/firebaseConfig";
 
 const locations = [
   { id: 1, name: "Oulu", description: "Cold but nice", rating: 1 },
   { id: 2, name: "Kempele", description: "Metropol", rating: 5 },
 ];
-
-const Item = ({ name, description, rating }) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{name}</Text>
-    <Text>{description}</Text>
-    <Text>⭐ {rating} / 5</Text>
-  </View>
-);
-
 const ListScreen = ({ navigation }) => {
+  const [cities, setCities] = useState([]);
+
+  const fetchCities = async () => {
+    try {
+      const citiesCollection = collection(db, PROJECT_REF);
+      const citySnapshot = await getDocs(citiesCollection);
+      const cityList = citySnapshot.docs.map((doc) => ({
+        id: doc.id, // Varmistetaan, että jokaisella kohteella on uniikki ID
+        ...doc.data(),
+      }));
+      setCities(cityList);
+    } catch (error) {
+      console.error("Virhe tietojen hakemisessa: ", error);
+    }
+  };
+
+  const Item = ({ name, description, rating }) => (
+    <View style={styles.item}>
+      <Text style={styles.title}>{name}</Text>
+      <Text>{description}</Text>
+      <Text>⭐ {rating} / 5</Text>
+    </View>
+  );
+
+  useEffect(() => {
+    fetchCities();
+  }, []);
+
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
         <View>
           <FlatList
-            data={locations}
+            data={cities}
             renderItem={({ item }) => (
               <Item
                 name={item.name}
@@ -31,7 +52,7 @@ const ListScreen = ({ navigation }) => {
                 rating={item.rating}
               />
             )}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item) => item.id}
             contentContainerStyle={{ flexGrow: 0 }}
           />
           <Button

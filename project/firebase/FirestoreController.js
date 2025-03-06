@@ -36,7 +36,7 @@ export async function addCity(cityName, description, rating) {
       throw new Error("Missing required fields");
     }
 
-    const cityRef = collection(db, "PROJECT_REF");
+    const cityRef = collection(db, PROJECT_REF);
     const docRef = await addDoc(cityRef, {
       name: cityName,
       description: description,
@@ -56,12 +56,12 @@ export function removeCity(id) {
   return deleteDoc(cityDocRef).catch((error) => console.log(error.message));
 }
 
-export function removeAllCities() {
+/* export function removeAllCities() {
   const userRef = collection(db, USERS_REF, auth.currentUser.uid, PROJECT_REF);
   getDocs(userRef)
     .then((docs) => docs.forEach((doc) => removeCity(doc.id)))
     .catch((error) => console.log(error.message));
-}
+}*/
 
 export function updateCity(id, data) {
   const cityDocRef = doc(db, PROJECT_REF, id);

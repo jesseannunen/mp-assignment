@@ -13,7 +13,7 @@ import { getAuth } from "firebase/auth";
 const USERS_REF = "users";
 
 export function useFire() {
-  const [project, setProject] = useState([]);
+  const [cities, setProject] = useState([]);
 
   useEffect(() => {
     const q = query(collection(db, PROJECT_REF));

@@ -12,6 +12,6 @@ const firebaseConfig = {
 console.log("Firebase Project ID:", process.env.EXPO_PUBLIC_PROJECT_ID);
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
-export const PROJECT_REF = "project";
+export const PROJECT_REF = "cities";
 
 export default firebaseConfig;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { View, Text, StyleSheet, TextInput } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import StarRating from "react-native-star-rating-widget";
@@ -9,16 +9,28 @@ const AddScreen = () => {
   const [cityName, setCityName] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [rating, setRating] = React.useState(0);
+  const [error, setError] = useState("");
 
   const handleSave = async () => {
+    if (!cityName.trim() || !description.trim() || rating === 0) {
+      setError("Fill all fields before saving!!");
+      return;
+    }
+    setError("");
     await addCity(cityName, description, rating);
     alert("City saved!");
+
+    setCityName("");
+    setDescription("");
+    setRating(0);
   };
 
-  const handleDeleteAll = async () => {
+  /* 
+  const handleDeleteAll = async () => {  Poista kaikki kaupungit, ei tarvita tähän.
     await removeAllCities();
     alert("All cities deleted!");
   };
+  */
 
   return (
     <SafeAreaProvider>
@@ -39,12 +51,9 @@ const AddScreen = () => {
           />
           <StarRating rating={rating} onChange={setRating} />
 
+          {error ? <Text style={styles.errorText}>{error}</Text> : null}
+
           <Button title="Save City" onPress={handleSave} />
-          <Button
-            title="Delete All Cities"
-            onPress={handleDeleteAll}
-            color="red"
-          />
 
           <Text>Add Screeeen</Text>
         </View>

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Button } from "react-native";
 import { getDocs, collection, onSnapshot } from "firebase/firestore";
 import { db, PROJECT_REF } from "../firebase/firebaseConfig";
+import { FontAwesome } from "@expo/vector-icons";
 
 const locations = [
   { id: 1, name: "Oulu", description: "Cold but nice", rating: 1 },
@@ -31,6 +32,12 @@ const ListScreen = ({ navigation }) => {
     <View style={styles.item}>
       <Text style={styles.title}>{name}</Text>
       <Text>{description}</Text>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("MapScreen", { cityName: name })}
+        style={styles.mapButton}
+      >
+        <FontAwesome name="map-marker" size={24} color="red" />
+      </TouchableOpacity>
       <Text>⭐ {rating} / 5</Text>
     </View>
   );

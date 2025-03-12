@@ -41,6 +41,8 @@ export async function addCity(cityName, description, rating) {
       name: cityName,
       description: description,
       rating: rating,
+      latitude: null,
+      longitude: null,
     });
 
     console.log("City added with ID:", docRef.id);

@@ -30,15 +30,17 @@ const ListScreen = ({ navigation }) => {
 
   const Item = ({ name, description, rating }) => (
     <View style={styles.item}>
-      <Text style={styles.title}>{name}</Text>
-      <Text>{description}</Text>
+      <View style={styles.textContainer}>
+        <Text style={styles.title}>{name}</Text>
+        <Text>{description}</Text>
+        <Text>⭐ {rating} / 5</Text>
+      </View>
       <TouchableOpacity
         onPress={() => navigation.navigate("MapScreen", { cityName: name })}
         style={styles.mapButton}
       >
-        <FontAwesome name="map-marker" size={24} color="red" />
+        <FontAwesome name="map-marker" size={32} color="red" />
       </TouchableOpacity>
-      <Text>⭐ {rating} / 5</Text>
     </View>
   );
 
@@ -80,9 +82,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   item: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: "#ddd",
+  },
+  textContainer: {
+    flex: 1,
   },
   title: {
     fontSize: 18,
